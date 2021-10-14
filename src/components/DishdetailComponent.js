@@ -1,72 +1,68 @@
-import React, {Component}from "react";
-import { Card, CardImg, CardImgOverlay, CardText, CardTitle, CardBody } from 'reactstrap';
-class DishDetail extends Component{
+import React from "react";
+import { Card, CardImg, CardText, CardTitle, CardBody } from 'reactstrap';
 
-    constructor(props){
-        super(props);
-        this.state={
-            comments : []
-        }
-    }
 
-    onSelect(comment){
-        this.setState({ comments: comment })
-    }
 
-    renderComments(comment){
-        if(comment.length > 0){ 
-            return (
-                <div>
-                    <h4>Comentarios</h4>
-                    {
-                    comment.map(item => {
-                        return <>
-                            <p>{item.comment}</p>
-                            <p>{item.author}, {item.date}</p>
-                        </>
-                    })
-                    }
+
+    const RenderDish = ({dish}) =>{
+        if(dish !== null){
+            return(
+                <div className="col-12 col-md-5 m-1">
+                    <Card >
+                    <CardImg width="100%" src={dish.image} alt={dish.name} title={dish.name}/>
+                    <CardBody>
+                        <CardTitle heading = "true">{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                    </Card>
                 </div>
+            )
+        }
+
+    }
+
+    const RenderComments = ({comment}) => {
+        if(comment !== undefined){
+            return (
+                    <div className="col-12 col-md-5 m-1">
+                            <Card>
+                            <h4 className="text-center">Comentarios</h4>
+                                <CardText>
+                                {
+                                    comment.map(item => {
+                                        return <div key={item.id}>
+                                            <p>{item.comment}</p>
+                                            <p>{item.author}, {item.date}</p>
+                                        </div>
+                                    })
+                                }
+                                </CardText>
+                            </Card>
+                        </div>
             )
         }else{
             return(
                 <div></div>
             )
         }
+       
     }
-
-    render(){
-        return(
-            <>
-            <div className="col-12 col-md-5 m-1">
-            <Card>
-                    <CardImg width="100%" src={this.props.plato.image} alt={this.props.plato.name} title={this.props.plato.name} />
-                    <CardBody>
-                    <CardTitle>{this.props.plato.name}</CardTitle>
-                    <CardText>{this.props.plato.description}</CardText>
-                    
-                    </CardBody>
-                </Card>
-            </div>
-            <div className="col-12 col-md-5 m-1">
-                <Card>
-                    
-                
-            <h4>Comentarios</h4>
-                    <CardText>{this.props.plato.comments.map((el) => (
-                        <ul key={el.id} >
-                           
-                            <p>{el.comment}</p>
-                            <li>{el.author}</li>
+   
+    const DishDetail = ( props )=>{ 
+                return (
+                  <>
+                  { props.dish  && (
+                        <div className="container">
+                        <div className="row">
+                            <RenderDish dish={props.dish} />
+                            <RenderComments comment={props.dish.comments} />
                             
-                        </ul>
-                    ))}</CardText>
-</Card>
-            </div>
-            </>
-        )
+                            </div>
+                    </div> 
+                  )}
+                  </>
+                );
     }
-}
-export default DishDetail
 
 
+export default DishDetail;
