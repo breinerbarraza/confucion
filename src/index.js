@@ -10,9 +10,6 @@ import App from './App';
 const divRoot =  document.getElementById('root');
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  divRoot
+      <App />,divRoot
 );
 
